@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+	<title>Эволюция Понятий: Логические Цепочки</title>
+	<script src="/sdk.js"></script>
+	<style>
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	overscroll-behavior: none;
+	background: #070b18;
+	touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+#canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	touch-action: none;
+	user-select: none;
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+}
+
+#canvas:focus {
+	outline: none;
+}
+
+#status, #status-splash {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+#status {
+	background-color: #242424;
+	background-image: radial-gradient(circle at 50% 42%, #13254a 0%, #070b18 75%);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	visibility: hidden;
+}
+
+#status-splash {
+	max-height: 55%;
+	max-width: 72%;
+	margin: auto;
+	object-fit: contain;
+}
+
+#status-splash.show-image--false {
+	display: none;
+}
+
+#status-splash.fullsize--true {
+	height: 100%;
+	width: 100%;
+	object-fit: contain;
+}
+
+#status-splash.use-filter--false {
+	image-rendering: pixelated;
+}
+
+#status-progress, #status-notice {
+	display: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+}
+
+#status-progress {
+	bottom: 12%;
+	width: min(320px, 68%);
+	height: 12px;
+	margin: 0 auto;
+	border-radius: 999px;
+	overflow: hidden;
+	appearance: none;
+	-webkit-appearance: none;
+	border: 1px solid rgba(56, 189, 248, 0.45);
+	background: rgba(15, 23, 42, 0.85);
+}
+
+#status-progress::-webkit-progress-bar {
+	background: rgba(15, 23, 42, 0.85);
+	border-radius: 999px;
+}
+
+#status-progress::-webkit-progress-value {
+	background: linear-gradient(90deg, #38bdf8, #34d399, #facc15);
+	border-radius: 999px;
+}
+
+#status-notice {
+	bottom: 18%;
+	background-color: #3a1d2e;
+	border-radius: 12px;
+	border: 1px solid #f43f5e;
+	color: #f8fafc;
+	font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+	line-height: 1.4;
+	margin: 0 2rem;
+	padding: 1rem;
+	text-align: center;
+	z-index: 2;
+}
+	</style>
+	<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
+<link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
+
+</head>
+<body oncontextmenu="return false;">
+	<canvas id="canvas">
+		Ваш браузер не поддерживает HTML5 Canvas.
+	</canvas>
+
+	<noscript>
+		Для запуска игры требуется JavaScript.
+	</noscript>
+
+	<div id="status">
+		<img id="status-splash" class="show-image--true fullsize--true use-filter--true" src="index.png" alt="">
+		<progress id="status-progress"></progress>
+		<div id="status-notice"></div>
+	</div>
+
+<script>
+window._ysdkPromise = null;
+function _gdIsRuRegion(raw) {
+	var code = String(raw || '').trim().slice(0, 2).toLowerCase();
+	return !code || ['ru', 'be', 'kk', 'uk'].indexOf(code) !== -1;
+}
+function _gdApplyShellLang(raw) {
+	var en = !_gdIsRuRegion(raw);
+	window._gdShellLang = en ? 'en' : 'ru';
+	document.documentElement.lang = window._gdShellLang;
+	document.title = en ? 'Concept Evolution: Logical Chains' : 'Эволюция Понятий: Логические Цепочки';
+}
+_gdApplyShellLang((typeof navigator !== 'undefined' && navigator.language) ? navigator.language : 'ru');
+try {
+	if (typeof YaGames !== 'undefined') {
+		window._ysdkPromise = YaGames.init();
+		if (window._ysdkPromise && typeof window._ysdkPromise.then === 'function') {
+			window._ysdkPromise.then(function (ysdk) {
+				try {
+					if (ysdk && ysdk.environment && ysdk.environment.i18n && ysdk.environment.i18n.lang) {
+						_gdApplyShellLang(ysdk.environment.i18n.lang);
+					}
+				} catch (e) {}
+			}).catch(function () {});
+		}
+	}
+} catch (e) {}
+
+document.addEventListener('contextmenu', function (e) { e.preventDefault(); }, { passive: false });
+document.addEventListener('selectstart', function (e) { e.preventDefault(); }, { passive: false });
+document.addEventListener('dragstart', function (e) { e.preventDefault(); }, { passive: false });
+window.addEventListener('keydown', function (e) {
+	if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space', ' '].indexOf(e.key) !== -1) {
+		e.preventDefault();
+	}
+}, { passive: false });
+	</script>
+
+	<script src="index.js"></script>
+	<script>
+const GODOT_CONFIG = {"args":[],"canvasResizePolicy":2,"emscriptenPoolSize":8,"ensureCrossOriginIsolationHeaders":false,"executable":"index","experimentalVK":false,"fileSizes":{"index.pck":4054444,"index.wasm":39514754},"focusCanvas":true,"gdextensionLibs":[],"godotPoolSize":4};
+const GODOT_THREADS_ENABLED = false;
+const engine = new Engine(GODOT_CONFIG);
+
+(function () {
+	const statusOverlay = document.getElementById('status');
+	const statusProgress = document.getElementById('status-progress');
+	const statusNotice = document.getElementById('status-notice');
+
+	let initializing = true;
+	let statusMode = '';
+
+	function setStatusMode(mode) {
+		if (statusMode === mode || !initializing) {
+			return;
+		}
+		if (mode === 'hidden') {
+			statusOverlay.remove();
+			initializing = false;
+			return;
+		}
+		statusOverlay.style.visibility = 'visible';
+		statusProgress.style.display = mode === 'progress' ? 'block' : 'none';
+		statusNotice.style.display = mode === 'notice' ? 'block' : 'none';
+		statusMode = mode;
+	}
+
+	function setStatusNotice(text) {
+		while (statusNotice.lastChild) {
+			statusNotice.removeChild(statusNotice.lastChild);
+		}
+		const lines = text.split('\n');
+		lines.forEach((line) => {
+			statusNotice.appendChild(document.createTextNode(line));
+			statusNotice.appendChild(document.createElement('br'));
+		});
+	}
+
+	function displayFailureNotice(err) {
+		console.error(err);
+		if (err instanceof Error) {
+			setStatusNotice(err.message);
+		} else if (typeof err === 'string') {
+			setStatusNotice(err);
+		} else {
+			setStatusNotice(window._gdShellLang === 'en' ? 'Failed to load the game.' : 'Произошла ошибка загрузки.');
+		}
+		setStatusMode('notice');
+		initializing = false;
+	}
+
+	const missing = Engine.getMissingFeatures({
+		threads: GODOT_THREADS_ENABLED,
+	});
+
+	if (missing.length !== 0) {
+		const prefix = window._gdShellLang === 'en'
+			? 'Your browser lacks required features:\n'
+			: 'Браузер не поддерживает необходимые функции:\n';
+		displayFailureNotice(prefix + missing.join('\n'));
+	} else {
+		setStatusMode('progress');
+		engine.startGame({
+			'onProgress': function (current, total) {
+				if (current > 0 && total > 0) {
+					statusProgress.value = current;
+					statusProgress.max = total;
+				} else {
+					statusProgress.removeAttribute('value');
+					statusProgress.removeAttribute('max');
+				}
+			},
+		}).then(() => {
+			setStatusMode('hidden');
+		}, displayFailureNotice);
+	}
+}());
+	</script>
+</body>
+</html>
+
